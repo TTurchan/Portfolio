@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -84,7 +83,7 @@ const HeroButtons = styled(motion.div)`
   margin-bottom: ${({ theme }) => theme.space[8]};
 `
 
-const PrimaryButton = styled(Link)`
+const PrimaryButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -95,6 +94,8 @@ const PrimaryButton = styled(Link)`
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   text-decoration: none;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
   
   &:hover {
     background-color: ${({ theme }) => theme.colors.pink};
@@ -202,12 +203,16 @@ const ProjectTag = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.sm};
 `
 
-const ProjectLink = styled(Link)`
+const ProjectLink = styled.button`
   display: inline-flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.purple};
   font-weight: ${({ theme }) => theme.fontWeights.medium};
   text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   transition: color 0.3s ease;
   
   svg {
@@ -225,6 +230,13 @@ const ProjectLink = styled(Link)`
 `
 
 const Home = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <HeroSection
@@ -241,19 +253,19 @@ const Home = () => {
         </SubHeading>
         
         <HeroButtons variants={fadeIn}>
-          <PrimaryButton to="/projects">
+          <PrimaryButton onClick={() => scrollToSection('projects')}>
             View Projects
           </PrimaryButton>
-          <SecondaryButton to="/contact">
+          <SecondaryButton onClick={() => scrollToSection('contact')}>
             Contact Me
           </SecondaryButton>
         </HeroButtons>
         
         <SocialBar variants={fadeIn}>
-          <SocialLink href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+          <SocialLink href="https://github.com/trevorturchan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <FontAwesomeIcon icon={faGithub} />
           </SocialLink>
-          <SocialLink href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+          <SocialLink href="https://linkedin.com/in/trevorturchan" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <FontAwesomeIcon icon={faLinkedin} />
           </SocialLink>
         </SocialBar>
@@ -263,60 +275,53 @@ const Home = () => {
         <SectionTitle>Featured Projects</SectionTitle>
         
         <ProjectsGrid
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial="initial"
+          animate="animate"
+          variants={stagger}
         >
-          <ProjectCard
-            whileHover={{ y: -5 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <ProjectCard variants={fadeIn}>
             <ProjectContent>
               <ProjectTitle>LLM-Powered Natural Language Database Query System</ProjectTitle>
               <ProjectDescription>
-                A full-stack application that translates natural language into SQL queries using LLMs, with dynamic visualizations.
+                A full-stack application that translates natural language into SQL using LLMs, with interactive visualizations.
               </ProjectDescription>
+              
               <ProjectTags>
                 <ProjectTag>React</ProjectTag>
                 <ProjectTag>TypeScript</ProjectTag>
                 <ProjectTag>FastAPI</ProjectTag>
                 <ProjectTag>LLM</ProjectTag>
-                <ProjectTag>SQL</ProjectTag>
               </ProjectTags>
-              <ProjectLink to="/projects">
-                View Project <FontAwesomeIcon icon={faArrowRight} />
+              
+              <ProjectLink onClick={() => scrollToSection('projects')}>
+                View Details <FontAwesomeIcon icon={faArrowRight} />
               </ProjectLink>
             </ProjectContent>
           </ProjectCard>
           
-          <ProjectCard
-            whileHover={{ y: -5 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <ProjectCard variants={fadeIn}>
             <ProjectContent>
               <ProjectTitle>GPU-Accelerated Data Visualization</ProjectTitle>
               <ProjectDescription>
-                Custom OpenGL shader system for visualizing billion-point memory error datasets, achieving 9000x speedup.
+                OpenGL-based visualization system for billion-point datasets, with 9000x performance improvement.
               </ProjectDescription>
+              
               <ProjectTags>
                 <ProjectTag>C++</ProjectTag>
                 <ProjectTag>OpenGL</ProjectTag>
-                <ProjectTag>GPU</ProjectTag>
-                <ProjectTag>Data Visualization</ProjectTag>
+                <ProjectTag>Python</ProjectTag>
+                <ProjectTag>GLSL</ProjectTag>
               </ProjectTags>
-              <ProjectLink to="/projects">
-                View Project <FontAwesomeIcon icon={faArrowRight} />
+              
+              <ProjectLink onClick={() => scrollToSection('projects')}>
+                View Details <FontAwesomeIcon icon={faArrowRight} />
               </ProjectLink>
             </ProjectContent>
           </ProjectCard>
         </ProjectsGrid>
       </FeaturedSection>
     </>
-  )
-}
+  );
+};
 
-export default Home 
+export default Home; 

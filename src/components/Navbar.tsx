@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { SectionRefs } from '../App'
 
 const NavbarContainer = styled.header`
-  position: sticky;
+  position: fixed; /* Changed from sticky to fixed for better scroll experience */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: ${({ theme }) => theme.zIndices.sticky};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background}CC; /* Added transparency */
   backdrop-filter: blur(10px);
   border-bottom: 1px solid ${({ theme }) => theme.colors.currentLine};
   width: 100%;
+  transition: transform 0.3s ease;
 `
 
 const NavContent = styled.div`
@@ -28,7 +31,7 @@ const NavContent = styled.div`
   }
 `
 
-const Logo = styled(Link)`
+const Logo = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['2xl']};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   color: ${({ theme }) => theme.colors.purple};
@@ -36,6 +39,7 @@ const Logo = styled(Link)`
   display: flex;
   align-items: center;
   transition: color 0.3s ease;
+  cursor: pointer;
   
   &:hover {
     color: ${({ theme }) => theme.colors.pink};
@@ -76,12 +80,13 @@ const NavItem = styled.div`
   }
 `
 
-const NavLink = styled(Link)<{ active: boolean }>`
+const NavLink = styled.div<{ active: boolean }>`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ active, theme }) => active ? theme.colors.pink : theme.colors.foreground};
   text-decoration: none;
   position: relative;
   padding: ${({ theme }) => theme.space[2]};
+  cursor: pointer;
   
   &:after {
     content: '';
@@ -134,17 +139,57 @@ const Overlay = styled(motion.div)<{ isOpen: boolean }>`
   }
 `
 
-const Navbar = () => {
+interface NavbarProps {
+  scrollToSection: (sectionName: keyof SectionRefs) => void;
+}
+
+const Navbar = ({ scrollToSection }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const { pathname } = useLocation()
+  const [activeSection, setActiveSection] = useState<keyof SectionRefs>('home')
+  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [visible, setVisible] = useState(true)
   
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
   
-  // Close menu when route changes
-  useEffect(() => {
+  const handleNavClick = (section: keyof SectionRefs) => {
+    scrollToSection(section)
     closeMenu()
-  }, [pathname])
+    setActiveSection(section)
+  }
+  
+  // Handle scroll to determine active section and navbar visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      // Navbar hide/show on scroll
+      const currentScrollPos = window.scrollY
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 70)
+      setPrevScrollPos(currentScrollPos)
+      
+      // Determine active section based on scroll position
+      const sections = {
+        home: document.getElementById('home'),
+        about: document.getElementById('about'),
+        projects: document.getElementById('projects'),
+        contact: document.getElementById('contact')
+      };
+      
+      const scrollPosition = window.scrollY + 300
+
+      if (sections.contact && scrollPosition >= sections.contact.offsetTop) {
+        setActiveSection('contact')
+      } else if (sections.projects && scrollPosition >= sections.projects.offsetTop) {
+        setActiveSection('projects')
+      } else if (sections.about && scrollPosition >= sections.about.offsetTop) {
+        setActiveSection('about')
+      } else {
+        setActiveSection('home')
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [prevScrollPos])
   
   // Disable body scroll when menu is open
   useEffect(() => {
@@ -160,9 +205,9 @@ const Navbar = () => {
   }, [isOpen])
   
   return (
-    <NavbarContainer>
+    <NavbarContainer style={{ transform: visible ? 'translateY(0)' : 'translateY(-100%)' }}>
       <NavContent>
-        <Logo to="/">
+        <Logo onClick={() => handleNavClick('home')}>
           Trevor Turchan
         </Logo>
         
@@ -180,16 +225,36 @@ const Navbar = () => {
         
         <NavLinks isOpen={isOpen}>
           <NavItem>
-            <NavLink to="/" active={pathname === '/'}>Home</NavLink>
+            <NavLink 
+              active={activeSection === 'home'}
+              onClick={() => handleNavClick('home')}
+            >
+              Home
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/about" active={pathname === '/about'}>About</NavLink>
+            <NavLink 
+              active={activeSection === 'about'}
+              onClick={() => handleNavClick('about')}
+            >
+              About
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/projects" active={pathname === '/projects'}>Projects</NavLink>
+            <NavLink 
+              active={activeSection === 'projects'}
+              onClick={() => handleNavClick('projects')}
+            >
+              Projects
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/contact" active={pathname === '/contact'}>Contact</NavLink>
+            <NavLink 
+              active={activeSection === 'contact'}
+              onClick={() => handleNavClick('contact')}
+            >
+              Contact
+            </NavLink>
           </NavItem>
         </NavLinks>
       </NavContent>

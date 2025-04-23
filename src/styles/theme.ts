@@ -1,17 +1,24 @@
-// Dracula color theme
+// Rose Pine color theme
 export const theme = {
   colors: {
-    background: '#282a36',
-    currentLine: '#44475a',
-    foreground: '#f8f8f2',
-    comment: '#6272a4',
-    cyan: '#8be9fd',
-    green: '#50fa7b',
-    orange: '#ffb86c',
-    pink: '#ff79c6',
-    purple: '#bd93f9',
-    red: '#ff5555',
-    yellow: '#f1fa8c',
+    // Main colors from Rose Pine
+    background: '#191724', // Base
+    currentLine: '#1f1d2e', // Surface
+    foreground: '#e0def4', // Text
+    comment: '#6e6a86',    // Muted
+    cyan: '#9ccfd8',       // Foam
+    green: '#31748f',      // Pine
+    orange: '#f6c177',     // Gold
+    pink: '#eb6f92',       // Love
+    purple: '#c4a7e7',     // Iris
+    red: '#eb6f92',        // Love (reusing for red)
+    yellow: '#f6c177',     // Gold (reusing for yellow)
+    rose: '#ebbcba',       // Rose (adding a new color)
+    subtle: '#908caa',     // Subtle (adding a new color)
+    overlay: '#26233a',    // Overlay (adding a new color)
+    highlightLow: '#21202e', // Highlight Low (adding a new color)
+    highlightMed: '#403d52', // Highlight Med (adding a new color)
+    highlightHigh: '#524f67', // Highlight High (adding a new color)
   },
   fonts: {
     body: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
