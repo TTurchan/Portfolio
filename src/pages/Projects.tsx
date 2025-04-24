@@ -150,7 +150,7 @@ const ProjectLink = styled.a`
   }
 `
 
-const ProjectImageWrapper = styled.div`
+/*const ProjectImageWrapper = styled.div`
   min-width: 280px;
   max-width: 400px;
   margin-bottom: ${({ theme }) => theme.space[6]};
@@ -159,8 +159,9 @@ const ProjectImageWrapper = styled.div`
     margin-bottom: 0;
   }
 `
+*/
 
-const ProjectImage = styled.div`
+/*const ProjectImage = styled.div`
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: ${({ theme }) => theme.radii.lg};
@@ -185,7 +186,7 @@ const ProjectImage = styled.div`
     object-fit: cover;
   }
 `
-
+*/
 const Projects = () => {
   return (
     <PageContainer

@@ -56,9 +56,9 @@ class ErrorBoundary extends Component<{ children: ReactNode }> {
               maxHeight: '50vh',
               color: '#c4a7e7'      // Rose Pine Iris
             }}>
-              {this.state.error && this.state.error.toString()}
+              {this.state.error }
               <hr/>
-              {this.state.errorInfo && this.state.errorInfo.componentStack}
+              {this.state.errorInfo }
             </pre>
           </details>
           <button

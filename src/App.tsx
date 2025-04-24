@@ -45,7 +45,7 @@ function App() {
         threshold: 0.1
       };
       
-      const handleIntersect = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      const handleIntersect = (entries: IntersectionObserverEntry[]) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
