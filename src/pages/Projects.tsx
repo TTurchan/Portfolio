@@ -254,11 +254,6 @@ const Projects = () => {
             </ProjectDescription>
           </ProjectContent>
           
-          <ProjectImageWrapper>
-            <ProjectImage>
-              <img src="/images/llm-query-demo.jpg" alt="LLM-Powered Database Query System Interface" />
-            </ProjectImage>
-          </ProjectImageWrapper>
         </ProjectItem>
         
         <ProjectItem variants={fadeIn}>
@@ -298,11 +293,6 @@ const Projects = () => {
             </ProjectDescription>
           </ProjectContent>
           
-          <ProjectImageWrapper>
-            <ProjectImage>
-              <img src="/images/nasa-radiation-viz.jpg" alt="GPU-accelerated visualization of radiation effects data" />
-            </ProjectImage>
-          </ProjectImageWrapper>
         </ProjectItem>
         
         <ProjectItem variants={fadeIn}>
@@ -348,11 +338,6 @@ const Projects = () => {
             </ProjectDescription>
           </ProjectContent>
           
-          <ProjectImageWrapper>
-            <ProjectImage>
-              <img src="/images/embedded-radiation-testing.jpg" alt="Embedded Systems for Radiation Testing" />
-            </ProjectImage>
-          </ProjectImageWrapper>
         </ProjectItem>
         
         <ProjectItem variants={fadeIn}>
@@ -398,12 +383,51 @@ const Projects = () => {
             </ProjectDescription>
           </ProjectContent>
           
-          <ProjectImageWrapper>
-            <ProjectImage>
-              <img src="/images/quantum-circuit-simulator.jpg" alt="Quantum Circuit Simulator visualization" />
-            </ProjectImage>
-          </ProjectImageWrapper>
         </ProjectItem>
+
+        <ProjectItem variants={fadeIn}>
+          <ProjectContent>
+            <ProjectTitle>2048 Game AI Solver</ProjectTitle>
+            
+            <ProjectDescription>
+              <Paragraph>
+                Developed an AI agent that plays the game 2048 using the minimax algorithm with alpha-beta pruning for optimization. The solver consistently reaches the 2048 tile and occasionally the 4096 tile.
+              </Paragraph>
+              
+              <BulletList>
+                <BulletItem>
+                  Implemented the minimax game tree search algorithm in C++.
+                </BulletItem>
+                <BulletItem>
+                  Incorporated alpha-beta pruning to significantly reduce the search space and improve performance.
+                </BulletItem>
+                <BulletItem>
+                  Designed and tuned a custom heuristic evaluation function based on board state features (e.g., empty tiles, monotonicity, smoothness).
+                </BulletItem>
+                <BulletItem>
+                  Optimized search depth parameters to balance performance and decision quality.
+                </BulletItem>
+              </BulletList>
+              
+              <TechStackTitle>Technologies Used</TechStackTitle>
+              <TechStack>
+                <TechItem>C++</TechItem>
+                <TechItem>Algorithms</TechItem>
+                <TechItem>Game Theory</TechItem>
+                <TechItem>Artificial Intelligence</TechItem>
+                <TechItem>Minimax Search</TechItem>
+                <TechItem>Alpha-Beta Pruning</TechItem>
+              </TechStack>
+
+              <ProjectLinks>
+                <ProjectLink href="https://github.com/TTurchan/CPP-Twenty-Forty-Eight/" target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon icon={faGithub} /> GitHub
+                </ProjectLink>
+              </ProjectLinks>
+            </ProjectDescription>
+          </ProjectContent>
+        </ProjectItem>
+
       </ProjectGrid>
     </PageContainer>
   )
